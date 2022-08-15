@@ -1,15 +1,15 @@
-from math import ceil, sqrt
+from math import sqrt
 import random
 
+# Flag variables
 even_odd_calls = False
 hint_count = 0
 multiple_hint_count = 0
-# Even_odd_hint2 = False
 quality_flag = False
 prime_check_done = False
 multiple_hint_given = False
 
-
+# Functions
 def is_prime(n: int) -> bool:
     """
 
@@ -30,6 +30,9 @@ def is_prime(n: int) -> bool:
 
 def even_odd(secret: int, guess: int) -> None:
     """
+    :param secret: the (random/secret) number
+    :param guess: the number guessed by the user
+    :return: None
     If the guessed no is even, but the secret no an odd one, then let the user know that they should guess an odd no,
     OR vice versa
     """
@@ -44,6 +47,8 @@ def even_odd(secret: int, guess: int) -> None:
 
 def even_odd2(secret: int) -> None:
     """
+    :param secret: the (secret/random) number which is to be checked for even/odd
+    :return: None
     Function to check whether the secret no is even or odd
     """
 
@@ -57,9 +62,9 @@ def multiple_hint_func(secret: int, num: int, num2: int) -> int:
     """
 
     :param secret: the secret number
-    :param num: the lower bound
-    :param num2: the upper bound
-    :return: a number that'll let the user know what the secret number is a multiple of
+    :param num: the lower bound from which we're to begin looking for a factor of the secret number
+    :param num2: the upper bound upto which we're to keep looking for that factor
+    :return: an integer number that'll let the user know what the secret number is a multiple of
     """
     global even_odd_calls
     global prime_check_done
@@ -71,7 +76,6 @@ def multiple_hint_func(secret: int, num: int, num2: int) -> int:
         print("The random number is a prime number")
         return 0
     else:
-        # for i in range(num, num2 + 1):
         for i in range(num, secret):
             if i != 0:
                 if secret % i == 0 and i != secret and i != 1:
@@ -79,7 +83,6 @@ def multiple_hint_func(secret: int, num: int, num2: int) -> int:
                     print(f"The random number is a multiple of {multiple_hint}")
                     multiple_hint_given = True
                     return multiple_hint
-                    # break
                 else:
                     if i == secret:
                         break
@@ -126,12 +129,7 @@ while guess != secret:  # and (score != 0)
         guess = int(guess)
         guess_quality_check = abs(secret - guess) / abs(num - num2)
 
-        # if guess > num or guess < 1:
-        #     print("Your guess is out of the selected range")
-        #     count += 1
-        #     # continue
-        # else:
-        #     continue
+        
         if guess == secret:
             print("Congratulations! you guessed the correct number")
         else:
@@ -154,7 +152,6 @@ while guess != secret:  # and (score != 0)
                 print("You're far away from the random number")
                 hint_count += 1
             if len(hint_list) == 0 or guess_quality_check < hint_list[-1]:
-                # hint_list[0] = guess_quality_check
                 hint_list.append(guess_quality_check)
                 if quality_flag is True and (hint_list[-1] is not None):
                     print("You're closer to the random number, compared to your previous guess")
@@ -171,7 +168,6 @@ while guess != secret:  # and (score != 0)
                 hint_count += 1
             the_multiple = 0
             if hint_count > 0 and multiple_hint_count == 0:
-                # if multiple_hint_count == 0:
                 the_multiple = multiple_hint_func(secret, num, num2)
                 the_multiple_list.append(the_multiple)
                 multiple_hint_count += 1
